@@ -1,0 +1,197 @@
+diff --git a/ansible/roles/cinder/tasks/external_ceph.yml b/ansible/roles/cinder/tasks/external_ceph.yml
+index 45fe480e..e11def1e 100644
+--- a/ansible/roles/cinder/tasks/external_ceph.yml
++++ b/ansible/roles/cinder/tasks/external_ceph.yml
+@@ -9,28 +9,48 @@
+     - volume
+     - backup
+ 
+-- name: Copying over ceph.conf for Cinder
+-  merge_configs:
+-    vars:
+-      service_name: "{{ item }}"
+-    sources:
+-      - "{{ node_custom_config }}/cinder/ceph.conf"
+-      - "{{ node_custom_config }}/cinder/{{ item }}/ceph.conf"
++- name: Copying over ceph.conf file
++  template:
++    src: "{{ node_custom_config }}/cinder/ceph.conf"
+     dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
++  when: inventory_hostname in groups['cinder-volume'] or
++        inventory_hostname in groups['cinder-backup']
+   with_items:
+     - "cinder-backup"
+     - "cinder-volume"
+ 
+-- name: Copy over Ceph keyring files for cinder-volume
++- name: Copy over ceph keyring file for cinder-volume - cinder
++  copy:
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/cinder-volume/ceph.client.cinder.keyring"
++  when: inventory_hostname in groups['cinder-volume']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.cinder.keyring"
++    - "{{ node_custom_config }}/cinder/ceph.client.cinder.keyring"
++
++- name: Copy over ceph keyring file for cinder-volume - cinder-backup
++  copy:
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/cinder-volume/ceph.client.cinder-backup.keyring"
++  when: inventory_hostname in groups['cinder-volume']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.cinder-backup.keyring"
++    - "{{ node_custom_config }}/cinder/ceph.client.cinder-backup.keyring"
++
++- name: Copy over ceph keyring file for cinder-backup - cinder
+   copy:
+     src: "{{ item }}"
+-    dest: "{{ node_config_directory }}/cinder-volume/"
+-  with_fileglob:
+-    - "{{ node_custom_config }}/cinder/cinder-volume/ceph.client*"
++    dest: "{{ node_config_directory }}/cinder-backup/ceph.client.cinder.keyring"
++  when: inventory_hostname in groups['cinder-backup']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.cinder.keyring"
++    - "{{ node_custom_config }}/cinder/ceph.client.cinder.keyring"
+ 
+-- name: Copy over Ceph keyring files for cinder-backup
++- name: Copy over ceph keyring file for cinder-backup - cinder-backup
+   copy:
+     src: "{{ item }}"
+-    dest: "{{ node_config_directory }}/cinder-backup/"
+-  with_fileglob:
+-    - "{{ node_custom_config }}/cinder/cinder-volume/ceph.client*"
++    dest: "{{ node_config_directory }}/cinder-backup/ceph.client.cinder-backup.keyring"
++  when: inventory_hostname in groups['cinder-backup']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.cinder-backup.keyring"
++    - "{{ node_custom_config }}/cinder/ceph.client.cinder-backup.keyring"
+diff --git a/ansible/roles/glance/tasks/external_ceph.yml b/ansible/roles/glance/tasks/external_ceph.yml
+index 43e9cf72..31231520 100644
+--- a/ansible/roles/glance/tasks/external_ceph.yml
++++ b/ansible/roles/glance/tasks/external_ceph.yml
+@@ -5,9 +5,19 @@
+     state: "directory"
+   when: inventory_hostname in groups['glance-api']
+ 
+-- name: Copy over ceph files
++- name: Copy over ceph.conf file
++  template:
++    src: "{{ node_custom_config }}/glance/ceph.conf"
++    dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
++  when: inventory_hostname in groups[item]
++  with_items:
++    - "glance-api"
++
++- name: Copy over ceph glance keyring
+   copy:
+     src: "{{ item }}"
+-    dest: "{{ node_config_directory }}/glance-api/"
+-  with_fileglob:
+-    - "{{ node_custom_config }}/glance/ceph*"
++    dest: "{{ node_config_directory }}/glance-api/ceph.client.glance.keyring"
++  when: inventory_hostname in groups['glance-api']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.glance.keyring"
++    - "{{ node_custom_config }}/glance/ceph.client.glance.keyring"
+diff --git a/ansible/roles/gnocchi/tasks/external_ceph.yml b/ansible/roles/gnocchi/tasks/external_ceph.yml
+index 1d8ee098..8eeaeccd 100644
+--- a/ansible/roles/gnocchi/tasks/external_ceph.yml
++++ b/ansible/roles/gnocchi/tasks/external_ceph.yml
+@@ -10,8 +10,8 @@
+     - "gnocchi-statsd"
+ 
+ - name: Copy over ceph.conf file
+-  copy:
+-    src: "{{ node_custom_config }}/{{ item }}/ceph.conf"
++  template:
++    src: "{{ node_custom_config }}/gnocchi/ceph.conf"
+     dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
+   when: inventory_hostname in groups[item]
+   with_items:
+@@ -19,12 +19,29 @@
+     - "gnocchi-metricd"
+     - "gnocchi-statsd"
+ 
+-- name: Copy over ceph gnocchi keyring
++- name: Copy over ceph gnocchi keyring - gnocchi-api
+   copy:
+-    src: "{{ node_custom_config }}/{{ item }}/ceph.client.gnocchi.keyring"
+-    dest: "{{ node_config_directory }}/{{ item }}/ceph.client.gnocchi.keyring"
+-  when: inventory_hostname in groups[item]
+-  with_items:
+-    - "gnocchi-api"
+-    - "gnocchi-metricd"
+-    - "gnocchi-statsd"
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/gnocchi-api/ceph.client.gnocchi.keyring"
++  when: inventory_hostname in groups['gnocchi-api']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.gnocchi.keyring"
++    - "{{ node_custom_config }}/gnocchi/ceph.client.gnocchi.keyring"
++
++- name: Copy over ceph gnocchi keyring - gnocchi-metricd
++  copy:
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/gnocchi-metricd/ceph.client.gnocchi.keyring"
++  when: inventory_hostname in groups['gnocchi-metricd']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.gnocchi.keyring"
++    - "{{ node_custom_config }}/gnocchi/ceph.client.gnocchi.keyring"
++
++- name: Copy over ceph gnocchi keyring - gnocchi-statsd
++  copy:
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/gnocchi-statsd/ceph.client.gnocchi.keyring"
++  when: inventory_hostname in groups['gnocchi-statsd']
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.gnocchi.keyring"
++    - "{{ node_custom_config }}/gnocchi/ceph.client.gnocchi.keyring"
+diff --git a/ansible/roles/nova/tasks/external-ceph.yml b/ansible/roles/nova/tasks/external-ceph.yml
+index 79363106..9244ee9d 100644
+--- a/ansible/roles/nova/tasks/external-ceph.yml
++++ b/ansible/roles/nova/tasks/external-ceph.yml
+@@ -9,15 +9,29 @@
+   when: inventory_hostname in groups['compute']
+ 
+ - name: Check nova keyring file
+-  local_action: stat path="{{ node_custom_config }}/nova/ceph.client.nova.keyring"
++  local_action: stat path="{{ item }}"
+   register: nova_cephx_keyring_file
+   failed_when: not nova_cephx_keyring_file.stat.exists
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.nova.keyring"
++    - "{{ node_custom_config }}/nova/ceph.client.nova.keyring"
++
++- name: Prepare nova_cephx_keyring_file variable
++  set_fact:
++    nova_cephx_keyring_file: "{{ nova_cephx_keyring_file.results[0] }}"
+ 
+ - name: Check cinder keyring file
+-  local_action: stat path="{{ node_custom_config }}/nova/ceph.client.cinder.keyring"
++  local_action: stat path="{{ item }}"
+   register: cinder_cephx_keyring_file
+   failed_when: not cinder_cephx_keyring_file.stat.exists
+   when: cinder_backend_ceph | bool
++  with_first_found:
++    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.cinder.keyring"
++    - "{{ node_custom_config }}/nova/ceph.client.cinder.keyring"
++
++- name: Prepare cinder_cephx_keyring_file variable
++  set_fact:
++    cinder_cephx_keyring_file: "{{ cinder_cephx_keyring_file.results[0] }}"
+ 
+ # NOTE: nova-compute and nova-libvirt only need ceph.client.nova.keyring.
+ - name: Copy over ceph nova keyring file
+@@ -30,9 +44,9 @@
+   when: inventory_hostname in groups['compute']
+ 
+ - name: Copy over ceph.conf
+-  copy:
++  template:
+     src: "{{ node_custom_config }}/nova/ceph.conf"
+-    dest: "{{ node_config_directory }}/{{ item }}/"
++    dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
+   with_items:
+     - nova-compute
+     - nova-libvirt

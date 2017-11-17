@@ -1,0 +1,9 @@
+ansible>=2.3.2.0,<2.4
+ara>=0.14.4
+cryptography
+paramiko
+proxmoxer
+pymysql
+redis
+requests
+ruamel.yaml

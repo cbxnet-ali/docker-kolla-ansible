@@ -1,0 +1,22 @@
+From e132cebc6b4eaca7c9e682f5f3f0070e3fd48171 Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Thu, 02 Nov 2017 14:08:01 +0100
+Subject: [PATCH] Use /bin/bash as executable in a task of the mariadb recovery play
+
+Change-Id: I5e5aaab4fd1ef39de1b1e6fcf5b87ba8b41ba7eb
+Closes-bug: 1729603
+---
+
+diff --git a/ansible/roles/mariadb/tasks/recover_cluster.yml b/ansible/roles/mariadb/tasks/recover_cluster.yml
+index 707d745..dd484b9 100644
+--- a/ansible/roles/mariadb/tasks/recover_cluster.yml
++++ b/ansible/roles/mariadb/tasks/recover_cluster.yml
+@@ -42,6 +42,8 @@
+ 
+   - name: Comparing seqno value on all mariadb hosts
+     shell: "if [[ {{ hostvars[inventory_hostname]['seqno'] }} -lt {{ hostvars[item]['seqno'] }} ]]; then echo {{ hostvars[item]['seqno'] }}; fi"
++    args:
++      executable: /bin/bash
+     with_items: "{{ groups['mariadb'] }}"
+     changed_when: false
+     register: seqno_compare

@@ -1,0 +1,32 @@
+From 3c004200b323d3f3d1d29994c4ba36f9147247a9 Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Mon, 22 May 2017 12:34:36 +0200
+Subject: [PATCH] Use internal interface to connect with keystone_ssh
+
+Change-Id: I1283014f785c2e6abf8db99c4fd71c008718a35e
+---
+
+diff --git a/ansible/roles/keystone/templates/fernet-node-sync.sh.j2 b/ansible/roles/keystone/templates/fernet-node-sync.sh.j2
+index a100f23..dddde1b 100644
+--- a/ansible/roles/keystone/templates/fernet-node-sync.sh.j2
++++ b/ansible/roles/keystone/templates/fernet-node-sync.sh.j2
+@@ -11,6 +11,6 @@
+ # For each host node sync tokens
+ {% for host in groups['keystone'] %}
+ {% if inventory_hostname != host %}
+-/usr/bin/rsync -azu --delete -e 'ssh -i /var/lib/keystone/.ssh/id_rsa -p {{ keystone_ssh_port }} -F /var/lib/keystone/.ssh/config' keystone@{{ host }}:/etc/keystone/fernet-keys/ /etc/keystone/fernet-keys
++/usr/bin/rsync -azu --delete -e 'ssh -i /var/lib/keystone/.ssh/id_rsa -p {{ keystone_ssh_port }} -F /var/lib/keystone/.ssh/config' keystone@{{ hostvars[host]['ansible_' + api_interface]['ipv4']['address'] }}:/etc/keystone/fernet-keys/ /etc/keystone/fernet-keys
+ {% endif %}
+ {% endfor %}
+diff --git a/ansible/roles/keystone/templates/fernet-rotate.sh.j2 b/ansible/roles/keystone/templates/fernet-rotate.sh.j2
+index 28c5b6f..54a6768 100644
+--- a/ansible/roles/keystone/templates/fernet-rotate.sh.j2
++++ b/ansible/roles/keystone/templates/fernet-rotate.sh.j2
+@@ -4,6 +4,6 @@
+ 
+ {% for host in groups['keystone'] %}
+ {% if inventory_hostname != host %}
+-/usr/bin/rsync -az -e 'ssh -i /var/lib/keystone/.ssh/id_rsa -p {{ keystone_ssh_port }} -F /var/lib/keystone/.ssh/config' --delete /etc/keystone/fernet-keys/ keystone@{{ host }}:/etc/keystone/fernet-keys
++/usr/bin/rsync -az -e 'ssh -i /var/lib/keystone/.ssh/id_rsa -p {{ keystone_ssh_port }} -F /var/lib/keystone/.ssh/config' --delete /etc/keystone/fernet-keys/ keystone@{{ hostvars[host]['ansible_' + api_interface]['ipv4']['address'] }}:/etc/keystone/fernet-keys
+ {% endif %}
+ {% endfor %}

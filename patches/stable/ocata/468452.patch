@@ -1,0 +1,27 @@
+From d0c670da7a3101a5277805effcdffee0403d66b5 Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Fri, 26 May 2017 17:40:09 +0200
+Subject: [PATCH] Fix "key_repository is world readable: /etc/keystone/fernet-keys/" warning
+
+TrivialFix
+
+Change-Id: Ia54ee5cae2ffcdcca24cb162699e09b0808a1037
+Depends-on: Ida2ed62eaba8908fb0bd50bb0be00fb5f9b1adc3
+---
+
+diff --git a/ansible/roles/keystone/templates/keystone.json.j2 b/ansible/roles/keystone/templates/keystone.json.j2
+index 3cd7921..932166f 100644
+--- a/ansible/roles/keystone/templates/keystone.json.j2
++++ b/ansible/roles/keystone/templates/keystone.json.j2
+@@ -44,6 +44,11 @@
+         {
+             "path": "/var/log/kolla/keystone/keystone.log",
+             "owner": "keystone:keystone"
++        },
++        {
++            "path": "/etc/keystone/fernet-keys",
++            "owner": "keystone:keystone",
++            "perm": "0770"
+         }
+     ]
+ }

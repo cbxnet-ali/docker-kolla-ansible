@@ -1,0 +1,29 @@
+From 83fae8c8f9121627643e9bce654eefb33e7b5fae Mon Sep 17 00:00:00 2001
+From: shaofeng_cheng <523675833@qq.com>
+Date: Thu, 30 Mar 2017 15:49:51 +0800
+Subject: [PATCH] Fix secure_proxy_ssl_header option
+
+Option "secure_proxy_ssl_header" from group "DEFAULT" is deprecated
+in Keystone.
+
+see
+https://docs.openstack.org/ocata/config-reference/identity/samples/keystone.conf.html
+
+Change-Id: I390969fce5b592c0267399969abc54e5caffbfc8
+Closes-Bug: #1675982
+---
+
+diff --git a/ansible/roles/keystone/templates/keystone.conf.j2 b/ansible/roles/keystone/templates/keystone.conf.j2
+index cf845bd..4b39d95 100644
+--- a/ansible/roles/keystone/templates/keystone.conf.j2
++++ b/ansible/roles/keystone/templates/keystone.conf.j2
+@@ -9,7 +9,8 @@
+ log_file = /var/log/kolla/keystone/keystone.log
+ use_stderr = True
+ 
+-secure_proxy_ssl_header = HTTP_X_FORWARDED_PROTO
++[oslo_middleware]
++enable_proxy_headers_parsing = True
+ 
+ [database]
+ connection = mysql+pymysql://{{ keystone_database_user }}:{{ keystone_database_password }}@{{ keystone_database_address }}/{{ keystone_database_name }}

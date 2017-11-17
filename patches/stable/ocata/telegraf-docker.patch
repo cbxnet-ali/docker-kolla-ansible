@@ -1,0 +1,18 @@
+diff --git a/ansible/roles/telegraf/templates/telegraf.conf.j2 b/ansible/roles/telegraf/templates/telegraf.conf.j2
+index 667c7927..7af5694b 100644
+--- a/ansible/roles/telegraf/templates/telegraf.conf.j2
++++ b/ansible/roles/telegraf/templates/telegraf.conf.j2
+@@ -88,3 +88,13 @@
+   gather_perf_events_statements             = true
+   interval_slow                             = "30m"
+ {% endif %}
++[[inputs.docker]]
++  endpoint = "tcp://127.0.0.1:2375"
++  container_name_include = []
++  container_name_exclude = []
++  timeout = "5s"
++  perdevice = false
++  total = true
++  docker_label_include = []
++  docker_label_exclude = []
++  tag_env = []

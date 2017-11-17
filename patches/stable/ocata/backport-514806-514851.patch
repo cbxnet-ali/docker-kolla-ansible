@@ -1,0 +1,36 @@
+diff --git a/ansible/roles/telegraf/defaults/main.yml b/ansible/roles/telegraf/defaults/main.yml
+index dc4b76af..d13aec70 100644
+--- a/ansible/roles/telegraf/defaults/main.yml
++++ b/ansible/roles/telegraf/defaults/main.yml
+@@ -33,3 +33,9 @@ haproxy_proto: "http"
+ influxdb_proto: "http"
+ rabbitmq_proto: "http"
+ mariadb_proto: "tcp"
++
++####################
++# Ports
++####################
++
++prometheus_client_port: 9273
+diff --git a/ansible/roles/telegraf/templates/telegraf.conf.j2 b/ansible/roles/telegraf/templates/telegraf.conf.j2
+index 52364dec..132c9875 100644
+--- a/ansible/roles/telegraf/templates/telegraf.conf.j2
++++ b/ansible/roles/telegraf/templates/telegraf.conf.j2
+@@ -11,12 +11,17 @@
+   quiet = false
+   hostname = ""
+   omit_hostname = false
++[[outputs.prometheus_client]]
++  listen = "{{ hostvars[inventory_hostname]['ansible_' + api_interface]['ipv4']['address'] }}:{{ prometheus_client_port }}"
++  expiration_interval = "60s"
++{% if enable_influxdb | bool %}
+ [[outputs.influxdb]]
+   urls = [{% for host in groups['influxdb'] %}"{{ influxdb_proto }}://{{ hostvars[host]['ansible_' + hostvars[host]['api_interface']]['ipv4']['address']}}:{{ influxdb_http_port }}"{% if not loop.last %},{% endif %}{% endfor %}]
+   database = "telegraf" # required
+   retention_policy = "autogen"
+   write_consistency = "any"
+   timeout = "5s"
++{% endif %}
+ [[inputs.cpu]]
+   percpu = true
+   totalcpu = true
