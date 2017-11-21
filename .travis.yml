@@ -31,7 +31,7 @@ script:
   - bash scripts/build.sh
 
 after_success:
-  - bash scripts/push.sh
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash scripts/push.sh; fi'
 
 after_script:
   - bash scripts/clean.sh
