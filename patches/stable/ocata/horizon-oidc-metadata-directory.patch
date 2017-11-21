@@ -1,0 +1,57 @@
+diff --git a/ansible/roles/horizon/tasks/config.yml b/ansible/roles/horizon/tasks/config.yml
+index 326dec47..3b0898fd 100644
+--- a/ansible/roles/horizon/tasks/config.yml
++++ b/ansible/roles/horizon/tasks/config.yml
+@@ -100,6 +100,26 @@
+   notify:
+     - Restart horizon container
+ 
++# NOTE(berendt): OIDC metadata directory integration {{{
++
++- name: Ensuring oidc metadata config directory exists
++  file:
++    path: "{{ node_config_directory }}/{{ item }}"
++    state: "directory"
++  with_items:
++    - "horizon/oidc_metadata"
++  when: inventory_hostname in groups['horizon']
++
++- name: Copy over oidc metadata files
++  copy:
++    src: "{{ item }}"
++    dest: "{{ node_config_directory }}/horizon/oidc_metadata"
++  with_fileglob:
++    - "{{ node_custom_config }}/horizon/oidc_metadata/*"
++  ignore_errors: true
++
++# }}}
++
+ - name: Check horizon container
+   vars:
+     horizon: "{{ horizon_services['horizon'] }}"
+diff --git a/ansible/roles/horizon/templates/horizon.json.j2 b/ansible/roles/horizon/templates/horizon.json.j2
+index 4fe53a40..6c25fe6f 100644
+--- a/ansible/roles/horizon/templates/horizon.json.j2
++++ b/ansible/roles/horizon/templates/horizon.json.j2
+@@ -1,5 +1,6 @@
+ {% set apache_cmd = 'apache2' if kolla_base_distro in ['ubuntu', 'debian'] else 'httpd' %}
+ {% set apache_dir = 'apache2/conf-enabled' if kolla_base_distro in ['ubuntu', 'debian'] else 'httpd/conf.d' %}
++{% set apache_oidc_metadata_dir = 'apache2/oidc_metadata' if kolla_base_distro in ['ubuntu', 'debian'] else 'httpd/oidc_metadata' %}
+ {% set apache_file = '000-default.conf' if kolla_base_distro in ['ubuntu', 'debian'] else 'horizon.conf' %}
+ {% set services = [
+     ( 'ceilometer', enable_ceilometer ),
+@@ -49,6 +50,14 @@
+             "dest": "/etc/openstack-dashboard/local_settings",
+             "owner": "horizon",
+             "perm": "0644"
++        },
++        {
++            "source": "{{ container_config_directory }}/oidc_metadata/*",
++            "dest": "/etc/{{ apache_oidc_metadata_dir }}",
++            "owner": "horizon",
++            "perm": "0644",
++            "type": "directory",
++            "optional": true
+         }
+     ]
+ }
