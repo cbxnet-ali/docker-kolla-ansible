@@ -15,6 +15,8 @@ before_install:
   - sudo apt-get -y install docker-ce
   - echo 'DOCKER_OPTS="--experimental"' | sudo tee /etc/default/docker
   - sudo service docker restart
+  - docker login --username="$TRAVIS_DOCKER_USERNAME" --password="$TRAVIS_DOCKER_PASSWORD"
+  - docker info
 
 install:
   - pip install -r requirements.txt
@@ -24,10 +26,6 @@ env:
     - OSISM_VERSION=latest
   matrix:
     - OPENSTACK_VERSION=ocata
-
-before_script:
-  - docker login --username="$TRAVIS_DOCKER_USERNAME" --password="$TRAVIS_DOCKER_PASSWORD"
-  - docker info
 
 script:
   - bash scripts/build.sh
