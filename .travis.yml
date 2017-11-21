@@ -1,0 +1,45 @@
+---
+sudo: required
+
+language: python
+
+addons:
+  apt:
+    packages:
+      - git
+
+before_install:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - sudo apt-get update
+  - sudo apt-get -y install docker-ce
+  - echo 'DOCKER_OPTS="--experimental"' | sudo tee /etc/default/docker
+  - sudo service docker restart
+
+install:
+  - pip install -r requirements.txt
+
+env:
+  global:
+    - OSISM_VERSION=latest
+  matrix:
+    - OPENSTACK_VERSION=ocata
+
+before_script:
+  - docker login --username="$TRAVIS_DOCKER_USERNAME" --password="$TRAVIS_DOCKER_PASSWORD"
+  - docker info
+
+script:
+  - bash scripts/build.sh
+
+after_success:
+  - bash scripts/push.sh
+
+after_script:
+  - bash scripts/clean.sh
+
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#osism"
+    use_notice: true
