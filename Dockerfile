@@ -98,7 +98,7 @@ RUN cp /repository/ansible/group_vars/all.yml /ansible/group_vars/all/defaults-k
     && python /split-kolla-ansible-site.py \
     && cp -r /repository/ansible/action_plugins/* /ansible/action_plugins \
     && cp /repository/ansible/library/* /ansible/library \
-    && cp -r /repository/ansible/roles /ansible/roles \
+    && cp -r /repository/ansible/roles/* /ansible/roles \
     && for playbook in $(find /repository/ansible -maxdepth 1 -name "*.yml"); do echo $playbook && cp $playbook /ansible/kolla-$(basename $playbook); done \
     && rm /split-kolla-ansible-site.py
 
