@@ -290,6 +290,13 @@ openvswitch_vswitchd_image: "{{ docker_registry }}/osism/openvswitch-vswitchd"
 openvswitch_vswitchd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
 ##########################
+# project: panko
+
+
+panko_api_image: "{{ docker_registry }}/osism/panko-api"
+panko_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
 # project: rabbitmq
 
 
