@@ -1,0 +1,15 @@
+--- a/ansible/roles/ceilometer/templates/event_pipeline.yaml.j2    2017-12-06 14:35:37.000000000 +0100
++++ b/ansible/roles/ceilometer/templates/event_pipeline.yaml.j2      2017-12-06 14:35:40.000000000 +0100
+@@ -8,6 +8,10 @@
+ sinks:
+     - name: event_sink
+       transformers:
+-      triggers:
+       publishers:
+-          - notifier://
++{% if enable_gnocchi | bool %}
++          - gnocchi://
++{% endif %}
++{% if enable_panko | bool %}
++          - panko://
++{% endif %}
