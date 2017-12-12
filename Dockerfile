@@ -44,6 +44,7 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y  \
         git \
+        gnupg-agent \
         libffi-dev \
         libssl-dev \
         libyaml-dev \
