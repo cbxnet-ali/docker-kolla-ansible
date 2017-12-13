@@ -324,3 +324,12 @@ telegraf_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 tempest_image: "{{ docker_registry }}/osism/tempest"
 tempest_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
+##########################
+# project: searchlight
+
+
+searchlight_api_image: "{{ docker_registry }}/osism/searchlight-api"
+searchlight_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+searchlight_listener_image: "{{ docker_registry }}/osism/searchlight-listener"
+searchlight_listener_tag: "{{ docker_openstack_version }}-{{ repository_version}}"

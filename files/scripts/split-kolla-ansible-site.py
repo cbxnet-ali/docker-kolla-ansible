@@ -44,6 +44,7 @@ SUPPORTED_ROLES = [
     "panko",
     "rabbitmq",
     "rally",
+    "searchlight",
     "telegraf",
     "tempest"
 ]
