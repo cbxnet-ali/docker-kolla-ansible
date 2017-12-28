@@ -1,0 +1,33 @@
+From 635f3fddaf4f9af0a4803a9491175427a88808b3 Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Thu, 28 Dec 2017 17:28:45 +0100
+Subject: [PATCH] Fix keystone domains directory permissions
+
+Change-Id: I4c43076795d28ea36f9e1d165e56abb110c5b544
+---
+
+diff --git a/ansible/roles/keystone/templates/keystone.json.j2 b/ansible/roles/keystone/templates/keystone.json.j2
+index 0f871d1..6a6c317 100644
+--- a/ansible/roles/keystone/templates/keystone.json.j2
++++ b/ansible/roles/keystone/templates/keystone.json.j2
+@@ -20,7 +20,7 @@
+             "source": "{{ container_config_directory }}/domains",
+             "dest": "/etc/keystone/domains",
+             "owner": "keystone",
+-            "perm": "0700",
++            "perm": "0600",
+             "optional": true
+         },
+         {
+@@ -50,6 +50,11 @@
+             "path": "/etc/keystone/fernet-keys",
+             "owner": "keystone:keystone",
+             "perm": "0770"
++        },
++        {
++            "path": "/etc/keystone/domains",
++            "owner": "keystone:keystone",
++            "perm": "0700"
+         }
+     ]
+ }
