@@ -333,3 +333,20 @@ searchlight_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
 searchlight_listener_image: "{{ docker_registry }}/osism/searchlight-listener"
 searchlight_listener_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: iscsi
+
+
+iscsid_image: "{{ docker_registry }}/osism/iscsid"
+iscsid_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+tgtd_image: "{{ docker_registry }}/osism/tgtd"
+tgtd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+
+##########################
+# project: multipathd
+
+multipathd_image: "{{ docker_registry }}/osism/multipathd"
+multipathd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
