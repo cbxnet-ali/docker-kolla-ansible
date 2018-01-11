@@ -1,0 +1,27 @@
+From ad90805cee4ef4642828fc01d2419978ca9120cd Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Thu, 11 Jan 2018 20:24:10 +0100
+Subject: [PATCH] kibana: allow use of server.basePath
+
+When using server.basePath a dynamic bundle optimization will be started.
+This job needs write access to /usr/share/kibana/optimize/bundles.
+
+Change-Id: Ieaae79a5940f3972a8067814a1113ef635970875
+---
+
+diff --git a/ansible/roles/kibana/templates/kibana.json.j2 b/ansible/roles/kibana/templates/kibana.json.j2
+index 3ce5c7f..599c107 100644
+--- a/ansible/roles/kibana/templates/kibana.json.j2
++++ b/ansible/roles/kibana/templates/kibana.json.j2
+@@ -13,6 +13,11 @@
+             "path": "/var/log/kolla/kibana",
+             "owner": "kibana:kibana",
+             "recurse": true
++        },
++        {
++            "path": "/usr/share/kibana/optimize/bundles",
++            "owner": "kibana:kibana",
++            "recurse": true
+         }
+     ]
+ }
