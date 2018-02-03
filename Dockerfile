@@ -33,14 +33,9 @@ ADD files/requirements.yml /ansible/galaxy/requirements.yml
 
 ADD files/dragon_sudoers /etc/sudoers.d/dragon_sudoers
 
-# prepare repository & upgrade/install required packages
+# upgrade/install required packages
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-         curl \
-    && curl -L http://repository-1.osism.io/aptly.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://repository-1.osism.io/container-$REPOSITORY_VERSION/ xenial main" > /etc/apt/sources.list \
-    && apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y  \
         git \
