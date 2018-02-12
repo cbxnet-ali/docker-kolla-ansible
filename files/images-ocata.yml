@@ -205,9 +205,6 @@ neutron_metadata_agent_tag: "{{ docker_openstack_version }}-{{ repository_versio
 neutron_openvswitch_agent_image: "{{ docker_registry }}/osism/neutron-openvswitch-agent"
 neutron_openvswitch_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
-neutron_sfc_agent_image: "{{ docker_registry }}/osism/neutron-sfc-agent"
-neutron_sfc_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
-
 neutron_server_image: "{{ docker_registry }}/osism/neutron-server"
 neutron_server_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
