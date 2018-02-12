@@ -27,6 +27,7 @@ SUPPORTED_ROLES = [
     "ceilometer",
     "chrony",
     "cinder",
+    "cloudkitty",
     "elasticsearch",
     "glance",
     "gnocchi",
@@ -37,18 +38,27 @@ SUPPORTED_ROLES = [
     "iscsi",
     "keystone",
     "kibana",
+    "magnum",
     "manila",
     "mariadb",
     "memcached",
+    "mistral",
     "multipathd",
     "neutron",
     "nova",
+    "octavia",
+    "openvswitch",
+    "ovs-dpdk",
     "panko",
     "rabbitmq",
     "rally",
+    "redis",
     "searchlight",
+    "skydive",
     "telegraf",
-    "tempest"
+    "tempest",
+    "vitrage",
+    "watcher"
 ]
 
 for play in site:
