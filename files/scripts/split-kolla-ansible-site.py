@@ -62,10 +62,13 @@ SUPPORTED_ROLES = [
 ]
 
 for play in site:
+    print("CHECKING PLAY %s" % play)
     if play["name"].startswith("Apply role") and not play["name"].endswith("prechecks"):
         name = play["name"][11:]
+        print("FOUND ROLE %s" % name)
 
         if name in SUPPORTED_ROLES:
+            print("SUPPORTED ROLE %s" % name)
             play["gather_facts"] = "no"
             dump = ruamel.yaml.dump([play], Dumper=ruamel.yaml.RoundTripDumper, indent=4, block_seq_indent=2)
             with open(os.path.join(DSTPATH, "kolla-%s.yml" % name), "w+") as fp:
