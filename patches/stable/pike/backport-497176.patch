@@ -1,0 +1,12 @@
+diff --git a/ansible/roles/neutron/defaults/main.yml b/ansible/roles/neutron/defaults/main.yml
+index a29b3bd1..c3ed7b3a 100644
+--- a/ansible/roles/neutron/defaults/main.yml
++++ b/ansible/roles/neutron/defaults/main.yml
+@@ -19,6 +19,7 @@ neutron_services:
+     volumes:
+       - "{{ node_config_directory }}/openvswitch-db-server/:{{ container_config_directory }}/:ro"
+       - "/etc/localtime:/etc/localtime:ro"
++      - "/lib/modules:/lib/modules:ro"
+       - "/run:/run:shared"
+       - "kolla_logs:/var/log/kolla/"
+       - "openvswitch_db:/var/lib/openvswitch/"

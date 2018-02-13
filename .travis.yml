@@ -26,6 +26,7 @@ env:
     - OSISM_VERSION=latest
   matrix:
     - OPENSTACK_VERSION=ocata
+    - OPENSTACK_VERSION=pike
 
 script:
   - bash scripts/build.sh

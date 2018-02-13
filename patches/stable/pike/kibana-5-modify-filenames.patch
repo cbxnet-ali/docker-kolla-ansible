@@ -1,0 +1,16 @@
+diff --git a/ansible/roles/kibana/templates/kibana.json.j2 b/ansible/roles/kibana/templates/kibana.json.j2
+index 9410a07d..8b1a4b71 100644
+--- a/ansible/roles/kibana/templates/kibana.json.j2
++++ b/ansible/roles/kibana/templates/kibana.json.j2
+@@ -1,9 +1,9 @@
+ {
+-    "command": "/opt/kibana/bin/kibana",
++    "command": "/usr/share/kibana/bin/kibana",
+     "config_files": [
+         {
+             "source": "{{ container_config_directory }}/kibana.yml",
+-            "dest": "/opt/kibana/config/kibana.yml",
++            "dest": "/usr/share/kibana/config/kibana.yml",
+             "owner": "kibana",
+             "perm": "0640"
+         }

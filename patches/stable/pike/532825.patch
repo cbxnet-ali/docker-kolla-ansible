@@ -1,0 +1,26 @@
+From 96ba341792adfae6712fa6e2f1c8bc83c9151a2c Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Thu, 11 Jan 2018 14:54:32 +0100
+Subject: [PATCH] Make custom kibana configuration files possible
+
+Change-Id: Iedfad564f834504fa1f4bfd935cd735d1d9ee65f
+---
+
+diff --git a/ansible/roles/kibana/tasks/config.yml b/ansible/roles/kibana/tasks/config.yml
+index 7c19abf..4eb2ca1 100644
+--- a/ansible/roles/kibana/tasks/config.yml
++++ b/ansible/roles/kibana/tasks/config.yml
+@@ -24,8 +24,12 @@
+ - name: Copying over Kibana configuration file
+   template:
+     src: "{{ item.key }}.yml.j2"
+-    dest: "{{ node_config_directory }}/{{ item.key }}/{{ item.key }}.yml"
++    dest: "{{ node_config_directory }}/kibana/{{ item.key }}.yml"
+   register: kibana_confs
++  with_first_found:
++    - "{{ node_custom_config }}/kibana/{{ inventory_hostname }}/{{ item.key }}.yml"
++    - "{{ node_custom_config }}/kibana/{{ item.key }}.yml"
++    - "{{ item.key }}.yml.j2"
+   when:
+     - inventory_hostname in groups[item.value.group]
+     - item.value.enabled | bool

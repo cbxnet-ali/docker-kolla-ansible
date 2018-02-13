@@ -55,7 +55,6 @@ SUPPORTED_ROLES = [
     "redis",
     "searchlight",
     "skydive",
-    "telegraf",
     "tempest",
     "vitrage",
     "watcher"

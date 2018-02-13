@@ -1,0 +1,35 @@
+From d1fe0778f168a0428a211966c2a80cf6bb3e7a07 Mon Sep 17 00:00:00 2001
+From: Mark Duggan <mark.duggan@oracle.com>
+Date: Thu, 26 Oct 2017 14:22:19 +0100
+Subject: [PATCH] Fixing missing copy of iscsi container config files
+
+Iscsi containers on compute and storage nodes in
+restarting mode w/o config files
+
+Closes-Bug: #1727785
+
+Change-Id: I1c2b1db791dc9be76e60425e4752d64ffba34f1b
+---
+
+diff --git a/ansible/roles/iscsi/tasks/config.yml b/ansible/roles/iscsi/tasks/config.yml
+index a951dcd..17f46d0 100644
+--- a/ansible/roles/iscsi/tasks/config.yml
++++ b/ansible/roles/iscsi/tasks/config.yml
+@@ -4,7 +4,7 @@
+     path: "{{ node_config_directory }}/{{ item }}"
+     state: "directory"
+     recurse: yes
+-  when: ( ( inventory_hostname in groups['compute'] or inventory_hostname in groups['cinder-volume'] ) and enable_cinder_backend_lvm | bool )
++  when: ( ( inventory_hostname in groups['compute'] or inventory_hostname in groups['cinder-volume'] ) and enable_cinder_backend_iscsi | bool )
+          or ( inventory_hostname in groups['ironic-conductor'] and enable_ironic | bool )
+   with_items:
+     - "iscsid"
+@@ -13,7 +13,7 @@
+   template:
+     src: "{{ item }}.json.j2"
+     dest: "{{ node_config_directory }}/{{ item }}/config.json"
+-  when: ( ( inventory_hostname in groups['compute'] or inventory_hostname in groups['cinder-volume'] ) and enable_cinder_backend_lvm | bool )
++  when: ( ( inventory_hostname in groups['compute'] or inventory_hostname in groups['cinder-volume'] ) and enable_cinder_backend_iscsi | bool )
+          or ( inventory_hostname in groups['ironic-conductor'] and enable_ironic | bool )
+   with_items:
+     - "iscsid"

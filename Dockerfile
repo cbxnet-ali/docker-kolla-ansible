@@ -85,7 +85,11 @@ RUN mkdir -p \
 # prepare project repository
 
 RUN git clone -b $PROJECT_VERSION $PROJECT_REPOSITORY /repository \
-    && for patchfile in $(find /patches/$PROJECT_VERSION -name "*.patch"); do (echo $patchfile && cd /repository && patch --batch -p1) < $patchfile; done
+    && for patchfile in $(find /patches/$PROJECT_VERSION -name "*.patch"); do \
+        echo $patchfile; \
+        ( cd /repository && patch --batch -p1 --dry-run ) < $patchfile || exit 1; \
+        ( cd /repository && patch --batch -p1 ) < $patchfile; \
+       done
 
 # project specific instructions
 

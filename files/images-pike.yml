@@ -1,5 +1,5 @@
 ---
-docker_openstack_version: ocata
+docker_openstack_version: pike
 
 ##########################
 # project: aodh
