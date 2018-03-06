@@ -1,18 +1,8 @@
-diff --git a/ansible/roles/mariadb/defaults/main.yml b/ansible/roles/mariadb/defaults/main.yml
-index 91710081..2c61a2a9 100644
---- a/ansible/roles/mariadb/defaults/main.yml
-+++ b/ansible/roles/mariadb/defaults/main.yml
-@@ -26,3 +26,5 @@ database_max_timeout: 60
- mariadb_image: "{{ docker_registry ~ '/' if docker_registry else '' }}{{ docker_namespace }}/{{ kolla_base_distro }}-{{ kolla_install_type }}-mariadb"
- mariadb_tag: "{{ openstack_release }}"
- mariadb_image_full: "{{ mariadb_image }}:{{ mariadb_tag }}"
-+
-+prometheus_database_password:
 diff --git a/ansible/roles/mariadb/tasks/register.yml b/ansible/roles/mariadb/tasks/register.yml
-index 76030f2b..a7240772 100644
+index 76030f2b4..62555eb84 100644
 --- a/ansible/roles/mariadb/tasks/register.yml
 +++ b/ansible/roles/mariadb/tasks/register.yml
-@@ -13,6 +13,20 @@
+@@ -13,6 +13,21 @@
        priv: "*.*:USAGE"
    run_once: True
  
@@ -29,6 +19,7 @@ index 76030f2b..a7240772 100644
 +      host: "%"
 +      priv: "*.*:PROCESS,REPLICATION CLIENT,SELECT"
 +  run_once: True
++  when: prometheus_database_password is defined
 +
  - name: Cleaning up facts
    set_fact:
