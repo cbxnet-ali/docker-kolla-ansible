@@ -1,0 +1,38 @@
+diff --git a/ansible/roles/cinder/tasks/external_ceph.yml b/ansible/roles/cinder/tasks/external_ceph.yml
+index 4d6496386..bba068006 100644
+--- a/ansible/roles/cinder/tasks/external_ceph.yml
++++ b/ansible/roles/cinder/tasks/external_ceph.yml
+@@ -13,21 +13,18 @@
+     - item.key in services_need_directory
+   with_dict: "{{ cinder_services }}"
+ 
+-- name: Copying over ceph.conf for Cinder
+-  vars:
+-    services_need_config:
+-      - "cinder-volume"
+-      - "cinder-backup"
+-  merge_configs:
+-    sources:
+-      - "{{ node_custom_config }}/cinder/ceph.conf"
+-      - "{{ node_custom_config }}/cinder/{{ item.key }}/ceph.conf"
+-    dest: "{{ node_config_directory }}/{{ item.key }}/ceph.conf"
+-  when:
+-    - item.value.enabled | bool
+-    - inventory_hostname in groups[item.value.group]
+-    - item.key in services_need_config
+-  with_dict: "{{ cinder_services }}"
++- name: Copying over ceph.conf file
++  template:
++    src: "{{ node_custom_config }}/cinder/ceph.conf"
++    dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
++  when: inventory_hostname in groups['cinder-volume'] or
++        inventory_hostname in groups['cinder-backup']
++  with_items:
++    - "cinder-backup"
++    - "cinder-volume"
++  notify:
++    - Restart cinder-volume container
++    - Restart cinder-backup container
+ 
+ - name: Copy over Ceph keyring files for cinder-volume
+   copy:

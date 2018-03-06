@@ -1,0 +1,34 @@
+From fcf755c8ce3193d274927937c80379f4cdd14d96 Mon Sep 17 00:00:00 2001
+From: Christian Berendt <berendt@betacloud-solutions.de>
+Date: Tue, 06 Mar 2018 18:47:42 +0100
+Subject: [PATCH] Handle external ceph configs as templates
+
+Change-Id: Ice5b058fe17ad7d648f21d1ddacaa339c6f7102f
+---
+
+diff --git a/ansible/roles/gnocchi/tasks/external_ceph.yml b/ansible/roles/gnocchi/tasks/external_ceph.yml
+index 9dca91a..16c166c 100644
+--- a/ansible/roles/gnocchi/tasks/external_ceph.yml
++++ b/ansible/roles/gnocchi/tasks/external_ceph.yml
+@@ -10,7 +10,7 @@
+     - "gnocchi-statsd"
+ 
+ - name: Copy over ceph.conf file
+-  copy:
++  template:
+     src: "{{ node_custom_config }}/{{ item }}/ceph.conf"
+     dest: "{{ node_config_directory }}/{{ item }}/ceph.conf"
+   when: inventory_hostname in groups[item]
+diff --git a/ansible/roles/nova/tasks/external_ceph.yml b/ansible/roles/nova/tasks/external_ceph.yml
+index 700dbcb..f3c53a6 100644
+--- a/ansible/roles/nova/tasks/external_ceph.yml
++++ b/ansible/roles/nova/tasks/external_ceph.yml
+@@ -42,7 +42,7 @@
+     - Restart nova-libvirt container
+ 
+ - name: Copy over ceph.conf
+-  copy:
++  template:
+     src: "{{ node_custom_config }}/nova/ceph.conf"
+     dest: "{{ node_config_directory }}/{{ item }}/"
+     mode: "0660"
