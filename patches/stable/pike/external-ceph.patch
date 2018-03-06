@@ -147,10 +147,10 @@ index 1d8ee098..8eeaeccd 100644
 +  with_first_found:
 +    - "{{ ceph_share_directory }}/{{ ceph_cluster_fsid }}/etc/ceph/ceph.client.gnocchi.keyring"
 +    - "{{ node_custom_config }}/gnocchi/ceph.client.gnocchi.keyring"
-diff --git a/ansible/roles/nova/tasks/external-ceph.yml b/ansible/roles/nova/tasks/external-ceph.yml
+diff --git a/ansible/roles/nova/tasks/external_ceph.yml b/ansible/roles/nova/tasks/external_ceph.yml
 index 79363106..9244ee9d 100644
---- a/ansible/roles/nova/tasks/external-ceph.yml
-+++ b/ansible/roles/nova/tasks/external-ceph.yml
+--- a/ansible/roles/nova/tasks/external_ceph.yml
++++ b/ansible/roles/nova/tasks/external_ceph.yml
 @@ -9,15 +9,29 @@
    when: inventory_hostname in groups['compute']
  
