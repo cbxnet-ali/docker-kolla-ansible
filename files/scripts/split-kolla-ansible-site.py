@@ -61,7 +61,6 @@ SUPPORTED_ROLES = [
 ]
 
 for play in site:
-    print("CHECKING PLAY %s" % play)
     if play["name"].startswith("Apply role") and not play["name"].endswith("prechecks"):
         name = play["name"][11:]
         print("FOUND ROLE %s" % name)
