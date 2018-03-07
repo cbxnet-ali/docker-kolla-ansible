@@ -1,0 +1,12 @@
+diff --git a/ansible/roles/common/templates/conf/input/01-syslog.conf.j2 b/ansible/roles/common/templates/conf/input/01-syslog.conf.j2
+index 41dc7de64..e475f45ba 100644
+--- a/ansible/roles/common/templates/conf/input/01-syslog.conf.j2
++++ b/ansible/roles/common/templates/conf/input/01-syslog.conf.j2
+@@ -7,5 +7,7 @@
+   bind 0.0.0.0
+ {% endif %}
+   tag syslog
++  priority_key log_level
++  source_hostname_key Hostname
+   format /^(?<Payload>.*)$/
+ </source>
