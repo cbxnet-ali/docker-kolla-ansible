@@ -61,10 +61,6 @@ RUN chmod 0440 /etc/sudoers.d/dragon_sudoers \
 RUN pip install --upgrade pip \
     && pip install -r /requirements.txt
 
-# install required ansible roles
-
-RUN ansible-galaxy install -v -f -r /ansible/galaxy/requirements.yml -p /ansible/galaxy
-
 # create required directories
 
 # internal use only
@@ -81,6 +77,10 @@ RUN mkdir -p \
         /ansible/logs \
         /ansible/secrets \
         /share
+
+# install required ansible roles
+
+RUN ansible-galaxy install -v -f -r /ansible/galaxy/requirements.yml -p /ansible/galaxy
 
 # prepare project repository
 
