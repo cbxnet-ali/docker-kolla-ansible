@@ -58,7 +58,7 @@ RUN chmod 0440 /etc/sudoers.d/dragon_sudoers \
 
 # install required python packages
 
-RUN pip install --upgrade pip \
+RUN pip install --upgrade "pip<10.0.0" \
     && pip install -r /requirements.txt
 
 # create required directories
