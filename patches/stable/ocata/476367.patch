@@ -1,0 +1,79 @@
+From f5fba5d442a360c0ed83e4a42a3fd822bf4139a5 Mon Sep 17 00:00:00 2001
+From: zhubingbing <zhu.bingbing@99cloud.net>
+Date: Thu, 22 Jun 2017 14:13:50 +0800
+Subject: [PATCH] Fix field data is too large
+
+Change-Id: Id3ceaa27687fda3b773873501208dacbfa3536ab
+Closes-bug: #1699680
+---
+
+diff --git a/ansible/group_vars/all.yml b/ansible/group_vars/all.yml
+index 896eb9d..6bcf5c8 100644
+--- a/ansible/group_vars/all.yml
++++ b/ansible/group_vars/all.yml
+@@ -107,6 +107,11 @@
+ keepalived_virtual_router_id: "51"
+ 
+ 
++#######################
++# Elasticsearch Options
++#######################
++es_heap_size: "1G"
++
+ ####################
+ # Networking options
+ ####################
+diff --git a/ansible/roles/elasticsearch/defaults/main.yml b/ansible/roles/elasticsearch/defaults/main.yml
+index 4d7815c..86d5ae9 100644
+--- a/ansible/roles/elasticsearch/defaults/main.yml
++++ b/ansible/roles/elasticsearch/defaults/main.yml
+@@ -5,6 +5,8 @@
+     group: elasticsearch
+     enabled: true
+     image: "{{ elasticsearch_image_full }}"
++    environment:
++      ES_HEAP_SIZE: "{{ es_heap_size }}"
+     volumes:
+       - "{{ node_config_directory }}/elasticsearch/:{{ container_config_directory }}/"
+       - "/etc/localtime:/etc/localtime:ro"
+@@ -15,6 +17,7 @@
+ # Elasticsearch
+ ####################
+ elasticsearch_cluster_name: "kolla_logging"
++es_heap_size: "1g"
+ 
+ ####################
+ # Docker
+diff --git a/ansible/roles/elasticsearch/handlers/main.yml b/ansible/roles/elasticsearch/handlers/main.yml
+index b59917f..a1a14ee 100644
+--- a/ansible/roles/elasticsearch/handlers/main.yml
++++ b/ansible/roles/elasticsearch/handlers/main.yml
+@@ -11,6 +11,7 @@
+     common_options: "{{ docker_common_options }}"
+     name: "{{ service.container_name }}"
+     image: "{{ service.image }}"
++    environment: "{{ service.environment }}"
+     volumes: "{{ service.volumes }}"
+   when:
+     - action != "config"
+diff --git a/ansible/roles/elasticsearch/tasks/config.yml b/ansible/roles/elasticsearch/tasks/config.yml
+index 4718278..e183d00 100644
+--- a/ansible/roles/elasticsearch/tasks/config.yml
++++ b/ansible/roles/elasticsearch/tasks/config.yml
+@@ -40,6 +40,7 @@
+     name: "{{ item.value.container_name }}"
+     image: "{{ item.value.image }}"
+     volumes: "{{ item.value.volumes }}"
++    environment: "{{ item.value.environment }}"
+   register: check_elasticsearch_containers
+   when:
+     - action != "config"
+diff --git a/ansible/roles/elasticsearch/templates/elasticsearch.yml.j2 b/ansible/roles/elasticsearch/templates/elasticsearch.yml.j2
+index 9cc7d80..d4e8fbc 100644
+--- a/ansible/roles/elasticsearch/templates/elasticsearch.yml.j2
++++ b/ansible/roles/elasticsearch/templates/elasticsearch.yml.j2
+@@ -17,3 +17,4 @@
+ path.data: "/var/lib/elasticsearch/data"
+ path.logs: "/var/log/kolla/elasticsearch"
+ path.scripts: "/etc/elasticsearch/scripts"
++indices.fielddata.cache.size: 40%
