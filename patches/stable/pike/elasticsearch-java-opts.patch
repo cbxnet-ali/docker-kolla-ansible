@@ -1,0 +1,35 @@
+diff --git a/ansible/group_vars/all.yml b/ansible/group_vars/all.yml
+index 076691a10..e7191058b 100644
+--- a/ansible/group_vars/all.yml
++++ b/ansible/group_vars/all.yml
+@@ -106,7 +106,7 @@ keepalived_virtual_router_id: "51"
+ #######################
+ # Elasticsearch Options
+ #######################
+-es_heap_size: "1G"
++es_java_opts: "-Xms1G -Xmx1G"
+ 
+ ####################
+ # Networking options
+diff --git a/ansible/roles/elasticsearch/defaults/main.yml b/ansible/roles/elasticsearch/defaults/main.yml
+index 86d5ae9ae..efffb22a2 100644
+--- a/ansible/roles/elasticsearch/defaults/main.yml
++++ b/ansible/roles/elasticsearch/defaults/main.yml
+@@ -6,7 +6,7 @@ elasticsearch_services:
+     enabled: true
+     image: "{{ elasticsearch_image_full }}"
+     environment:
+-      ES_HEAP_SIZE: "{{ es_heap_size }}"
++      ES_JAVA_OPTS: "{{ es_java_opts }}"
+     volumes:
+       - "{{ node_config_directory }}/elasticsearch/:{{ container_config_directory }}/"
+       - "/etc/localtime:/etc/localtime:ro"
+@@ -17,7 +17,7 @@ elasticsearch_services:
+ # Elasticsearch
+ ####################
+ elasticsearch_cluster_name: "kolla_logging"
+-es_heap_size: "1g"
++es_java_opts: "-Xms1G -Xmx1G"
+ 
+ ####################
+ # Docker
