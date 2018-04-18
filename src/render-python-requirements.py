@@ -19,12 +19,16 @@ import yaml
 
 # get environment parameters
 
+OPENSTACK_VERSION = os.environ.get("OPENSTACK_VERSION", "pike")
 OSISM_VERSION = os.environ.get("OSISM_VERSION", "latest")
 
 # load versions files from release repository
 
 with open("release/%s/base.yml" % OSISM_VERSION, "rb") as fp:
     versions = yaml.load(fp)
+
+with open("release/%s/openstack-%s.yml" % (OSISM_VERSION, OPENSTACK_VERSION), "rb") as fp:
+    openstack_versions = yaml.load(fp)
 
 # prepare jinja2 environment
 
@@ -35,6 +39,7 @@ environment = jinja2.Environment(loader=loader)
 
 template = environment.get_template("requirements.txt.j2")
 result = template.render({
+  'ansible_version': openstack_versions['ansible_version'],
   'osism_projects': versions['osism_projects']
 })
 with open("files/requirements.txt", "w+") as fp:
