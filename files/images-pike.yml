@@ -323,6 +323,15 @@ mistral_executor_image: "{{ docker_registry }}/osism/mistral-executor"
 mistral_executor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
 ##########################
+# project: magnum
+
+magnum_api_image: "{{ docker_registry }}/osism/magnum-api"
+magnum_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+magnum_conductor_image: "{{ docker_registry }}/osism/magnum-conductor"
+magnum_conductor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
 # project: x
 
 x_image: "{{ docker_registry }}/osism/x"
