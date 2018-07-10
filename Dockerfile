@@ -35,9 +35,9 @@ ADD files/dragon_sudoers /etc/sudoers.d/dragon_sudoers
 
 # upgrade/install required packages
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y  \
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y  \
         git \
         gnupg-agent \
         libffi-dev \
@@ -111,7 +111,7 @@ RUN chown -R dragon: /ansible /share
 
 # cleanup
 
-RUN apt-get clean \
+RUN apt clean \
     && rm -rf \
       /patches \
       /requirements.txt \
