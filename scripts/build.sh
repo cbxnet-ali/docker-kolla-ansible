@@ -17,6 +17,8 @@ OPENSTACK_VERSION=${OPENSTACK_VERSION:-pike}
 OSISM_VERSION=${OSISM_VERSION:-latest}
 REPOSITORY=${REPOSITORY:-osism/$PROJECT}
 
+HASH_REPOSITORY=$(git rev-parse --short HEAD)
+
 if [[ ! -e release ]]; then
     git clone https://github.com/osism/release
 fi
@@ -51,5 +53,6 @@ docker build \
     --build-arg "PROJECT_VERSION=$PROJECT_VERSION" \
     --build-arg "REPOSITORY_VERSION=$REPOSITORY_VERSION" \
     --build-arg "VERSION=$VERSION" \
+    --label "io.osism.${REPOSITORY#osism/}=$HASH_REPOSITORY" \
     --tag "$TAG-$(git rev-parse --short HEAD)" \
     $BUID_OPTS .
