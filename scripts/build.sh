@@ -48,11 +48,11 @@ if [[ $PROJECT == "osism-ansible" ]]; then
 fi
 
 docker build \
-    --squash \
     --build-arg "PROJECT_REPOSITORY=$PROJECT_REPOSITORY" \
     --build-arg "PROJECT_VERSION=$PROJECT_VERSION" \
     --build-arg "REPOSITORY_VERSION=$REPOSITORY_VERSION" \
     --build-arg "VERSION=$VERSION" \
     --label "io.osism.${REPOSITORY#osism/}=$HASH_REPOSITORY" \
+    --squash \
     --tag "$TAG-$(git rev-parse --short HEAD)" \
     $BUID_OPTS .
