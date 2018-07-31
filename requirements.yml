@@ -1,3 +1,0 @@
----
-- name: osism.docker                                      
-  src: git+https://github.com/osism/ansible-docker.git    
