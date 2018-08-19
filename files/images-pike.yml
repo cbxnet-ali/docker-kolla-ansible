@@ -334,5 +334,5 @@ magnum_conductor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 ##########################
 # project: x
 
-x_image: "{{ docker_registry }}/osism/x"
-x_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+# x_image: "{{ docker_registry }}/osism/x"
+# x_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
