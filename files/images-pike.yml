@@ -332,6 +332,15 @@ magnum_conductor_image: "{{ docker_registry }}/osism/magnum-conductor"
 magnum_conductor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
 
 ##########################
+# project: redis
+
+redis_image: "{{ docker_registry }}/osism/redis"
+redis_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+redis_sentinel_image: "{{ docker_registry }}/osism/redis-sentinel"
+redis_sentinel_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
 # project: x
 
 # x_image: "{{ docker_registry }}/osism/x"
