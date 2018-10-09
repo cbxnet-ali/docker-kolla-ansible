@@ -101,9 +101,6 @@ RUN cp /repository/ansible/group_vars/all.yml /ansible/group_vars/all/defaults-k
     && for playbook in $(find /repository/ansible -maxdepth 1 -name "*.yml"); do echo $playbook && cp $playbook /ansible/kolla-$(basename $playbook); done \
     && rm /split-kolla-ansible-site.py
 
-RUN git clone https://github.com/openstack/refstack-client /refstack-client \
-    && ( cd /refstack-client; bash setup_env )
-
 # set correct permssions
 
 RUN chown -R dragon: /ansible /share
