@@ -19,6 +19,7 @@ env:
     - OSISM_VERSION=latest
   matrix:
     - OPENSTACK_VERSION=pike
+    - OPENSTACK_VERSION=queens
 
 script:
   - bash scripts/build.sh

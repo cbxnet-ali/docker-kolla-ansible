@@ -1,0 +1,29 @@
+diff --git a/ansible/roles/kibana/tasks/post_config.yml b/ansible/roles/kibana/tasks/post_config.yml
+index 37dc14750..f89070f38 100644
+--- a/ansible/roles/kibana/tasks/post_config.yml
++++ b/ansible/roles/kibana/tasks/post_config.yml
+@@ -46,7 +46,7 @@
+     - kibana_default_indexes['.kibana']['mappings']['config']['properties']['defaultIndex'] is not defined
+ 
+ - name: Find kibana version
+-  command: docker exec -t kibana /opt/kibana/bin/kibana --version
++  command: docker exec -t kibana /usr/share/kibana/bin/kibana --version
+   register: kibana_version
+   run_once: true
+   changed_when: true
+diff --git a/ansible/roles/kibana/templates/kibana.json.j2 b/ansible/roles/kibana/templates/kibana.json.j2
+index 3ce5c7f8b..c60bd06c9 100644
+--- a/ansible/roles/kibana/templates/kibana.json.j2
++++ b/ansible/roles/kibana/templates/kibana.json.j2
+@@ -1,9 +1,9 @@
+ {
+-    "command": "/opt/kibana/bin/kibana",
++    "command": "/usr/share/kibana/bin/kibana",
+     "config_files": [
+         {
+             "source": "{{ container_config_directory }}/kibana.yml",
+-            "dest": "/opt/kibana/config/kibana.yml",
++            "dest": "/usr/share/kibana/config/kibana.yml",
+             "owner": "kibana",
+             "perm": "0640"
+         }

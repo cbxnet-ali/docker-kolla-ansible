@@ -1,0 +1,347 @@
+---
+docker_openstack_version: queens
+
+##########################
+# project: aodh
+
+aodh_api_image: "{{ docker_registry }}/osism/aodh-api"
+aodh_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+aodh_evaluator_image: "{{ docker_registry }}/osism/aodh-evaluator"
+aodh_evaluator_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+aodh_listener_image: "{{ docker_registry }}/osism/aodh-listener"
+aodh_listener_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+aodh_notifier_image: "{{ docker_registry }}/osism/aodh-notifier"
+aodh_notifier_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: ceilometer
+
+ceilometer_notification_image: "{{ docker_registry }}/osism/ceilometer-notification"
+ceilometer_notification_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+ceilometer_api_image: "{{ docker_registry }}/osism/ceilometer-api"
+ceilometer_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+ceilometer_central_image: "{{ docker_registry }}/osism/ceilometer-central"
+ceilometer_central_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+ceilometer_collector_image: "{{ docker_registry }}/osism/ceilometer-collector"
+ceilometer_collector_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+ceilometer_compute_image: "{{ docker_registry }}/osism/ceilometer-compute"
+ceilometer_compute_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: chrony
+
+chrony_image: "{{ docker_registry }}/osism/chrony"
+chrony_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: cinder
+
+cinder_volume_image: "{{ docker_registry }}/osism/cinder-volume"
+cinder_volume_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+cinder_scheduler_image: "{{ docker_registry }}/osism/cinder-scheduler"
+cinder_scheduler_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+cinder_backup_image: "{{ docker_registry }}/osism/cinder-backup"
+cinder_backup_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+cinder_api_image: "{{ docker_registry }}/osism/cinder-api"
+cinder_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: collectd
+
+collectd_image: "{{ docker_registry }}/osism/collectd"
+collectd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: common
+
+kolla_toolbox_image: "{{ docker_registry }}/osism/kolla-toolbox"
+kolla_toolbox_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+cron_image: "{{ docker_registry }}/osism/cron"
+cron_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: elasticsearch
+
+elasticsearch_image: "{{ docker_registry }}/osism/elasticsearch"
+elasticsearch_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: fluentd
+
+fluentd_image: "{{ docker_registry }}/osism/fluentd"
+fluentd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: glance
+
+glance_registry_image: "{{ docker_registry }}/osism/glance-registry"
+glance_registry_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+glance_api_image: "{{ docker_registry }}/osism/glance-api"
+glance_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: gnocchi
+
+gnocchi_api_image: "{{ docker_registry }}/osism/gnocchi-api"
+gnocchi_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+gnocchi_statsd_image: "{{ docker_registry }}/osism/gnocchi-statsd"
+gnocchi_statsd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+gnocchi_metricd_image: "{{ docker_registry }}/osism/gnocchi-metricd"
+gnocchi_metricd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: grafana
+
+grafana_image: "{{ docker_registry }}/osism/grafana"
+grafana_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: haproxy
+
+haproxy_image: "{{ docker_registry }}/osism/haproxy"
+haproxy_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: heat
+
+heat_api_image: "{{ docker_registry }}/osism/heat-api"
+heat_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+heat_api_cfn_image: "{{ docker_registry }}/osism/heat-api-cfn"
+heat_api_cfn_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+heat_engine_image: "{{ docker_registry }}/osism/heat-engine"
+heat_engine_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: horizon
+
+horizon_image: "{{ docker_registry }}/osism/horizon"
+horizon_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: keepalived
+
+keepalived_image: "{{ docker_registry }}/osism/keepalived"
+keepalived_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: keystone
+
+keystone_image: "{{ docker_registry }}/osism/keystone"
+keystone_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+keystone_fernet_image: "{{ docker_registry }}/osism/keystone-fernet"
+keystone_fernet_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+keystone_ssh_image: "{{ docker_registry }}/osism/keystone-ssh"
+keystone_ssh_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: kibana
+
+kibana_image: "{{ docker_registry }}/osism/kibana"
+kibana_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: manila
+
+manila_share_image: "{{ docker_registry }}/osism/manila-share"
+manila_share_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+manila_scheduler_image: "{{ docker_registry }}/osism/manila-scheduler"
+manila_scheduler_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+manila_api_image: "{{ docker_registry }}/osism/manila-api"
+manila_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+manila_data_image: "{{ docker_registry }}/osism/manila-data"
+manila_data_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: mariadb
+
+mariadb_image: "{{ docker_registry }}/osism/mariadb"
+mariadb_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: memcached
+
+memcached_image: "{{ docker_registry }}/osism/memcached"
+memcached_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: neutron
+
+neutron_dhcp_agent_image: "{{ docker_registry }}/osism/neutron-dhcp-agent"
+neutron_dhcp_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_l3_agent_image: "{{ docker_registry }}/osism/neutron-l3-agent"
+neutron_l3_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_lbaas_agent_image: "{{ docker_registry }}/osism/neutron-lbaas-agent"
+neutron_lbaas_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_linuxbridge_agent_image: "{{ docker_registry }}/osism/neutron-linuxbridge-agent"
+neutron_linuxbridge_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_metadata_agent_image: "{{ docker_registry }}/osism/neutron-metadata-agent"
+neutron_metadata_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_openvswitch_agent_image: "{{ docker_registry }}/osism/neutron-openvswitch-agent"
+neutron_openvswitch_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_server_image: "{{ docker_registry }}/osism/neutron-server"
+neutron_server_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+neutron_vpnaas_agent_image: "{{ docker_registry }}/osism/neutron-vpnaas-agent"
+neutron_vpnaas_agent_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: nova
+
+nova_libvirt_image: "{{ docker_registry }}/osism/nova-libvirt"
+nova_libvirt_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_ssh_image: "{{ docker_registry }}/osism/nova-ssh"
+nova_ssh_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_conductor_image: "{{ docker_registry }}/osism/nova-conductor"
+nova_conductor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_consoleauth_image: "{{ docker_registry }}/osism/nova-consoleauth"
+nova_consoleauth_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_novncproxy_image: "{{ docker_registry }}/osism/nova-novncproxy"
+nova_novncproxy_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_spicehtml5proxy_image: "{{ docker_registry }}/osism/nova-spicehtml5proxy"
+nova_spicehtml5proxy_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_scheduler_image: "{{ docker_registry }}/osism/nova-scheduler"
+nova_scheduler_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_compute_image: "{{ docker_registry }}/osism/nova-compute"
+nova_compute_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_api_image: "{{ docker_registry }}/osism/nova-api"
+nova_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_compute_ironic_image: "{{ docker_registry }}/osism/nova-compute-ironic"
+nova_compute_ironic_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+nova_serialproxy_image: "{{ docker_registry }}/osism/nova-serialproxy"
+nova_serialproxy_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+placement_api_image: "{{ docker_registry }}/osism/nova-placement-api"
+placement_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: openvswitch_db
+
+openvswitch_db_image: "{{ docker_registry }}/osism/openvswitch-db-server"
+openvswitch_db_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: openvswitch_vswitchd
+
+openvswitch_vswitchd_image: "{{ docker_registry }}/osism/openvswitch-vswitchd"
+openvswitch_vswitchd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: panko
+
+panko_api_image: "{{ docker_registry }}/osism/panko-api"
+panko_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: rabbitmq
+
+rabbitmq_image: "{{ docker_registry }}/osism/rabbitmq"
+rabbitmq_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: rally
+
+rally_image: "{{ docker_registry }}/osism/rally"
+rally_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: tempest
+
+tempest_image: "{{ docker_registry }}/osism/tempest"
+tempest_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: searchlight
+
+searchlight_api_image: "{{ docker_registry }}/osism/searchlight-api"
+searchlight_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+searchlight_listener_image: "{{ docker_registry }}/osism/searchlight-listener"
+searchlight_listener_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: iscsi
+
+iscsid_image: "{{ docker_registry }}/osism/iscsid"
+iscsid_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+tgtd_image: "{{ docker_registry }}/osism/tgtd"
+tgtd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: multipathd
+
+multipathd_image: "{{ docker_registry }}/osism/multipathd"
+multipathd_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: mistral
+
+mistral_api_image: "{{ docker_registry }}/osism/mistral-api"
+mistral_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+mistral_engine_image: "{{ docker_registry }}/osism/mistral-engine"
+mistral_engine_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+mistral_executor_image: "{{ docker_registry }}/osism/mistral-executor"
+mistral_executor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: magnum
+
+magnum_api_image: "{{ docker_registry }}/osism/magnum-api"
+magnum_api_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+magnum_conductor_image: "{{ docker_registry }}/osism/magnum-conductor"
+magnum_conductor_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: redis
+
+redis_image: "{{ docker_registry }}/osism/redis"
+redis_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+redis_sentinel_image: "{{ docker_registry }}/osism/redis-sentinel"
+redis_sentinel_tag: "{{ docker_openstack_version }}-{{ repository_version}}"
+
+##########################
+# project: x
+
+# x_image: "{{ docker_registry }}/osism/x"
+# x_tag: "{{ docker_openstack_version }}-{{ repository_version}}"

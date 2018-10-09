@@ -20,7 +20,7 @@ import yaml
 # get environment parameters
 
 OSISM_VERSION = os.environ.get("OSISM_VERSION", "latest")
-OPENSTACK_VERSION = os.environ.get("OPENSTACK_VERSION", "pike")
+OPENSTACK_VERSION = os.environ.get("OPENSTACK_VERSION", "queens")
 
 # load versions files from release repository
 
