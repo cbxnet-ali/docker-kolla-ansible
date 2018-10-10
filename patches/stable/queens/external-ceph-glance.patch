@@ -26,7 +26,7 @@ index 513e06350..dffa37622 100644
 +    - Restart glance-api container
 +
 +- name: Copy over ceph glance keyring
-+   copy:
++  copy:
 +     src: "{{ node_custom_config }}/{{ item }}/ceph.client.glance.keyring"
 +     dest: "{{ node_config_directory }}/{{ item }}/ceph.client.glance.keyring"
 +  when: inventory_hostname in groups[item]
