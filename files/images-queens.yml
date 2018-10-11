@@ -340,6 +340,29 @@ redis_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 redis_sentinel_image: "{{ docker_registry }}/osism/redis-sentinel"
 redis_sentinel_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
+# project: designate
+
+designate_central_image: "{{ docker_registry }}/osism/designate-central"
+designate_central_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_producer_image: "{{ docker_registry }}/osism/designate-producer"
+designate_producer_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_api_image: "{{ docker_registry }}/osism/designate-api"
+designate_api_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_backend_bind9_image: "{{ docker_registry }}/osism/designate-backend-bind9"
+designate_backend_bind9_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_mdns_image: "{{ docker_registry }}/osism/designate-mdns"
+designate_mdns_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_sink_image: "{{ docker_registry }}/osism/designate-sink"
+designate_sink_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+designate_worker_image: "{{ docker_registry }}/osism/designate-worker"
+designate_worker_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
 ##########################
 # project: x
 
