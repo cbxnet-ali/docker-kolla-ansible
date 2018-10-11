@@ -20,8 +20,11 @@ ADD patches /patches
 ADD files/tasks /ansible/tasks
 ADD files/library /ansible/library
 
-ADD files/playbooks/* /ansible/
-ADD files/scripts/* /
+ADD files/playbooks/kolla-facts.yml /ansible/kolla-facts.yml
+ADD files/playbooks/$VERSION/kolla-common.yml /ansible/kolla-common.yml
+
+ADD files/scripts/split-kolla-ansible-site.py /split-kolla-ansible-site.py
+ADD files/scripts/$VERSION/run.sh /run.sh
 
 ADD files/ansible.cfg /etc/ansible/ansible.cfg
 ADD files/defaults.yml /ansible/group_vars/all/defaults.yml

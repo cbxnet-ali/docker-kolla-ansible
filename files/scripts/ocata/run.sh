@@ -35,7 +35,6 @@ for service in $services; do
     -e @images.yml \
     -e @configuration.yml \
     -e action=$action \
-    -e kolla_action=$action \
     $* \
     $ANSIBLE_DIRECTORY/$ENVIRONMENT-$service.yml
 done
