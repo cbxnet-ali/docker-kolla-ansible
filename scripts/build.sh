@@ -56,3 +56,11 @@ docker build \
     --squash \
     --tag "$TAG-$(git rev-parse --short HEAD)" \
     $BUID_OPTS .
+
+git checkout -- files/requirements.txt
+git checkout -- files/versions.yml
+
+if [[ $PROJECT == "osism-ansible" ]]; then
+    git checkout -- files/requirements.yml
+    git checkout -- files/images.yml
+fi
