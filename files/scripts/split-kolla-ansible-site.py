@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import re
 import os 
 
 import ruamel.yaml
@@ -19,57 +20,23 @@ import ruamel.yaml
 SITEFILE = "/repository/ansible/site.yml"
 DSTPATH = "/ansible"
 
+UNSUPPORTED_ROLES = [
+    "baremetal",
+    "ceph"
+]
+
 with open(SITEFILE, "r") as fp:
     site = ruamel.yaml.load(fp, ruamel.yaml.RoundTripLoader)
 
-SUPPORTED_ROLES = [
-    "aodh",
-    "ceilometer",
-    "chrony",
-    "cinder",
-    "cloudkitty",
-    "destroy",
-    "elasticsearch",
-    "glance",
-    "gnocchi",
-    "grafana",
-    "haproxy",
-    "heat",
-    "horizon",
-    "iscsi",
-    "keystone",
-    "kibana",
-    "magnum",
-    "manila",
-    "mariadb",
-    "memcached",
-    "mistral",
-    "multipathd",
-    "neutron",
-    "nova",
-    "octavia",
-    "openvswitch",
-    "ovs-dpdk",
-    "panko",
-    "prechecks",
-    "rabbitmq",
-    "rally",
-    "redis",
-    "searchlight",
-    "skydive",
-    "stop",
-    "tempest",
-    "vitrage",
-    "watcher"
-]
-
 for play in site:
     if play["name"].startswith("Apply role") and not play["name"].endswith("prechecks"):
-        name = play["name"][11:]
-        print("FOUND ROLE %s" % name)
+        name = re.sub(r"\s+", "", play["name"][11:])
+        print("PROCESS ROLE %s" % name)
 
-        if name in SUPPORTED_ROLES:
-            print("SUPPORTED ROLE %s" % name)
+        if name in UNSUPPORTED_ROLES:
+            print("ROLE %s IS NOT SUPPORTED" % name)
+
+        else:
             play["gather_facts"] = "no"
             dump = ruamel.yaml.dump([play], Dumper=ruamel.yaml.RoundTripDumper, indent=4, block_seq_indent=2)
             with open(os.path.join(DSTPATH, "kolla-%s.yml" % name), "w+") as fp:
