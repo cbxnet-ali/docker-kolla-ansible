@@ -364,6 +364,36 @@ designate_worker_image: "{{ docker_registry }}/osism/designate-worker"
 designate_worker_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
 ##########################
+# skydive
+
+skydive_analyzer_image: "{{ docker_registry }}/osism/skydive-analyzer"
+skydive_analyzer_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+skydive_agent_image: "{{ docker_registry }}/osism/skydive-agent"
+skydive_agent_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+##########################
+# watcher
+
+watcher_engine_image: "{{ docker_registry }}/osism/watcher-engine"
+watcher_engine_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+watcher_api_image: "{{ docker_registry }}/osism/watcher-api"
+watcher_api_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+watcher_applier_image: "{{ docker_registry }}/osism/watcher-applier"
+watcher_applier_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+##########################
+# cloudkitty
+
+cloudkitty_api_image: "{{ docker_registry }}/osism/cloudkitty-api"
+cloudkitty_api_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+cloudkitty_processor_image: "{{ docker_registry }}/osism/cloudkitty-processor"
+cloudkitty_processor_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+##########################
 # project: x
 
 # x_image: "{{ docker_registry }}/osism/x"
