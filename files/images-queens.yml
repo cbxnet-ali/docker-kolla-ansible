@@ -394,6 +394,15 @@ cloudkitty_processor_image: "{{ docker_registry }}/osism/cloudkitty-processor"
 cloudkitty_processor_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
 ##########################
+# freezer
+
+freezer_api_image: "{{ docker_registry }}/osism/freezer-api"
+freezer_api_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+freezer_scheduler_image: "{{ docker_registry }}/osism/freezer-scheduler"
+freezer_scheduler_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
+##########################
 # project: x
 
 # x_image: "{{ docker_registry }}/osism/x"
