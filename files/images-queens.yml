@@ -22,14 +22,8 @@ aodh_notifier_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 ceilometer_notification_image: "{{ docker_registry }}/osism/ceilometer-notification"
 ceilometer_notification_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
-ceilometer_api_image: "{{ docker_registry }}/osism/ceilometer-api"
-ceilometer_api_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
-
 ceilometer_central_image: "{{ docker_registry }}/osism/ceilometer-central"
 ceilometer_central_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
-
-ceilometer_collector_image: "{{ docker_registry }}/osism/ceilometer-collector"
-ceilometer_collector_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
 ceilometer_compute_image: "{{ docker_registry }}/osism/ceilometer-compute"
 ceilometer_compute_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
