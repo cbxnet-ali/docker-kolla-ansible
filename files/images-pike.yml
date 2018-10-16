@@ -275,18 +275,6 @@ rabbitmq_image: "{{ docker_registry }}/osism/rabbitmq"
 rabbitmq_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
 ##########################
-# project: rally
-
-rally_image: "{{ docker_registry }}/osism/rally"
-rally_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
-
-##########################
-# project: tempest
-
-tempest_image: "{{ docker_registry }}/osism/tempest"
-tempest_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
-
-##########################
 # project: searchlight
 
 searchlight_api_image: "{{ docker_registry }}/osism/searchlight-api"
