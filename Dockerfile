@@ -15,6 +15,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 
+ADD overlays/$PROJECT_VERSION /overlays
 ADD patches /patches
 
 ADD files/tasks /ansible/tasks
@@ -49,6 +50,7 @@ RUN apt update \
         patch \
         python-dev \
         python-pip \
+        rsync \
         sudo \
         vim
 
@@ -91,7 +93,8 @@ RUN git clone -b $PROJECT_VERSION $PROJECT_REPOSITORY /repository \
         echo $patchfile; \
         ( cd /repository && patch --batch -p1 --dry-run ) < $patchfile || exit 1; \
         ( cd /repository && patch --batch -p1 ) < $patchfile; \
-       done
+       done \
+    && rsync -avz /overlays/ /repository/
 
 # project specific instructions
 
@@ -112,6 +115,7 @@ RUN chown -R dragon: /ansible /share
 
 RUN apt clean \
     && rm -rf \
+      /overlays \
       /patches \
       /requirements.txt \
       /tmp/* \
