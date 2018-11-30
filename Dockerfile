@@ -120,7 +120,9 @@ RUN apt clean \
       /requirements.txt \
       /tmp/* \
       /var/lib/apt/lists/* \
-      /var/tmp/*
+      /var/tmp/*  \
+      /usr/share/doc/* \
+      /usr/share/man/*
 
 VOLUME ["/ansible/cache", "/ansible/logs", "/ansible/secrets", "/share"]
 
