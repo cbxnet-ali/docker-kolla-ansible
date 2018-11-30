@@ -114,6 +114,7 @@ RUN chown -R dragon: /ansible /share
 # cleanup
 
 RUN apt clean \
+    && apt-get purge -y lib*-dev \
     && rm -rf \
       /overlays \
       /patches \
