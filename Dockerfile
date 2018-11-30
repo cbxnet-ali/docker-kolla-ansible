@@ -51,8 +51,7 @@ RUN apt update \
         python-dev \
         python-pip \
         rsync \
-        sudo \
-        vim
+        sudo
 
 # add user
 
