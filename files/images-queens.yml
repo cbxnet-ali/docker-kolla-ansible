@@ -202,6 +202,9 @@ neutron_openvswitch_agent_tag: "{{ docker_openstack_version }}-{{ repository_ver
 neutron_server_image: "{{ docker_registry }}/osism/neutron-server"
 neutron_server_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
 
+neutron_bgp_dragent_image: "{{ docker_registry }}/osism/neutron-bgp-dragent"
+neutron_bgp_dragent_tag: "{{ docker_openstack_version }}-{{ repository_version }}"
+
 ##########################
 # project: nova
 
